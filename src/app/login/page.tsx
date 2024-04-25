@@ -1,21 +1,21 @@
 'use client'
 
+import { cookies } from 'next/headers'
 import { FormEvent } from 'react'
  
 export default function Page() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
- 
+
     const formData = new FormData(event.currentTarget)
-    const response = await fetch('http://localhost:3333/users/login', {
+    
+    await fetch('/api/login', {
       method: 'POST',
-      body: formData,
+      body: JSON.stringify({
+        email: formData.get('email'),
+        password: formData.get('password')
+      }),
     })
- 
-    // Handle response if necessary
-    const data = await response.json()
-    console.log(data)
-    // ...
   }
  
   return (
