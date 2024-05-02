@@ -2,9 +2,12 @@
 
 import axios from 'axios'
 import { cookies } from 'next/headers'
+import { useRouter } from 'next/navigation'
 import { FormEvent } from 'react'
  
 export default function Page() {
+  const router = useRouter()
+
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
@@ -14,11 +17,13 @@ export default function Page() {
       password: formData.get('password')
     }
     
-    const response = await fetch('/api/login', {
+    await fetch('/api/login', {
       method: "POST",
       mode: "same-origin",
       body: JSON.stringify(dataJSON)
     })
+
+    router.push('/dashboard')
   }
  
   return (

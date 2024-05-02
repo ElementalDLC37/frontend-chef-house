@@ -1,5 +1,6 @@
 import { cookies } from "next/headers"
 import { NextRequest, NextResponse } from "next/server"
+import { setTimeout } from "timers/promises"
 
 export async function POST(req: NextRequest) {
   const { email, password } = await req.json()
@@ -17,5 +18,5 @@ export async function POST(req: NextRequest) {
   const { value } = await response.json()
   cookies().set('Session', `b ${value}`)
 
-  return NextResponse.json(200)
+  return NextResponse.json({ success: 'success'})
 }
