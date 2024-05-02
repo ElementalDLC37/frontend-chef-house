@@ -3,23 +3,19 @@ import { NextRequest, NextResponse } from "next/server"
 
 export async function POST(req: NextRequest) {
   const { email, password } = await req.json()
-  
-  console.log(JSON.stringify({
-    email: email,
-    password: password
-  }))
-  
+
   const response = await fetch('http://localhost:3333/users/login', {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json' // Adicionando cabeçalho Content-Type
+    },
     body: JSON.stringify({
-      email: email,
-      password: password
-    }),
+      email, password
+    })
   })
 
-  const data = await response.json()
-  console.log(data)
-  cookies().set('Session', `bearer ${data}`)
+  const { value } = await response.json()
+  cookies().set('Session', `b ${value}`)
 
   return NextResponse.json(200)
 }
